@@ -28,7 +28,7 @@ class ofApp : public ofBaseApp{
 		glm::vec3 pos = { 0, 0, 0 };
 		float radius = 10;
 
-		particle_system system{ 100 };
+		particle_system system{ 1000 };
 
 		wind wiatr;
 		std::shared_ptr<wind> wiatr_ptr = std::make_shared<wind>(wiatr);

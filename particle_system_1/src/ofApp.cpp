@@ -120,7 +120,7 @@ void ofApp::keyPressed(int key){
 	{
 		wiatr_ptr->force += glm::vec4{ 0, 0, -1, 0 };
 	}
-	std::cout << wiatr.force << "\n";
+	std::cout << wiatr_ptr->force << "\n";
 }
 
 //--------------------------------------------------------------

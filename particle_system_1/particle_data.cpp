@@ -24,6 +24,7 @@ void particle_data::generate(size_t max_size)
 	alive.reset(new bool[max_size]);
 	forces.reset(new glm::vec4[max_size]);
 	masses.reset(new float[max_size]);
+	color.reset(new glm::vec4[max_size]);
 }
 
 void particle_data::kill(size_t id)
@@ -58,6 +59,7 @@ void particle_data::swap_data(size_t a, size_t b)
 	std::swap(alive[a], alive[b]);
 	std::swap(forces[a], forces[b]);
 	std::swap(masses[a], masses[b]);
+	std::swap(color[a], color[b]);
 }
 
 void particle_emitter::emit(double dt, particle_data* data)
@@ -106,6 +108,18 @@ void particle_system::draw()
 {
 	for (size_t i = 0; i < num_alive_particles(); i++)
 	{
-		ofDrawIcoSphere(particles.positions[i].x, particles.positions[i].y, particles.positions[i].z, 10);
+		ofEnableAlphaBlending();
+
+		uint8_t red = particles.color[i].x;
+		uint8_t green = particles.color[i].y;
+		uint8_t blue = particles.color[i].z;
+
+		ofSetColor(red, green, blue, 255);
+		ofDrawSphere(particles.positions[i].x, particles.positions[i].y, particles.positions[i].z, 10);
+
+		ofDisableAlphaBlending();
+
+
+		//ofDrawIcoSphere(particles.positions[i].x, particles.positions[i].y, particles.positions[i].z, 10);
 	}
 }

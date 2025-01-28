@@ -22,9 +22,7 @@ void box_generator::generate(double dt, particle_data* data, size_t start_id, si
 		data->velocities[i].z = three_d.z;
 		data->velocities[i].w = 0;
 
-		//std::cout << data->velocities[i].x << " ";
-		//std::cout << data->velocities[i].y << " ";
-		//std::cout << data->velocities[i].z << "\n";
+		data->color[i] = glm::linearRand(glm::vec4(0, 0, 0, 255), glm::vec4(255, 255, 255, 255));
 	}
 }
 
@@ -141,7 +139,7 @@ void wind::update(double dt, particle_data* particles)
 {
 	size_t end_id = particles->count_alive;
 
-	std::cout << force.x << " " << force.y << " " << force.z << "\n";
+	//std::cout << force.x << " " << force.y << " " << force.z << "\n";
 
 	for (size_t i = 0; i < end_id; i++)
 	{

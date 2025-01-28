@@ -17,6 +17,7 @@ public:
 	std::unique_ptr<bool[]> alive;
 	std::unique_ptr <glm::vec4[]> forces;
 	std::unique_ptr <float[]> masses;
+	std::unique_ptr<glm::vec4[]> color;
 
 	size_t count = 0;
 	size_t count_alive = 0;
