@@ -22,6 +22,8 @@ void particle_data::generate(size_t max_size)
 	accelerations.reset(new glm::vec4[max_size]);
 	times.reset(new glm::vec4[max_size]);
 	alive.reset(new bool[max_size]);
+	forces.reset(new glm::vec4[max_size]);
+	masses.reset(new float[max_size]);
 }
 
 void particle_data::kill(size_t id)
@@ -54,6 +56,8 @@ void particle_data::swap_data(size_t a, size_t b)
 	std::swap(accelerations[a], accelerations[b]);
 	std::swap(times[a], times[b]);
 	std::swap(alive[a], alive[b]);
+	std::swap(forces[a], forces[b]);
+	std::swap(masses[a], masses[b]);
 }
 
 void particle_emitter::emit(double dt, particle_data* data)
@@ -73,7 +77,7 @@ particle_system::particle_system(size_t max_count)
 {
 	count = max_count;
 	particles.generate(max_count);
-	alive_particles.generate(max_count);
+	//alive_particles.generate(max_count);
 
 	for (size_t i = 0; i < max_count; i++)
 	{

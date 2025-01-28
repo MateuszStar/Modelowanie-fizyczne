@@ -30,6 +30,9 @@ class ofApp : public ofBaseApp{
 
 		particle_system system{ 100 };
 
+		wind wiatr;
+		std::shared_ptr<wind> wiatr_ptr = std::make_shared<wind>(wiatr);
+
 
 		
 };

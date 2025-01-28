@@ -15,6 +15,8 @@ public:
 	std::unique_ptr<glm::vec4[]> accelerations;
 	std::unique_ptr<glm::vec4[]> times;
 	std::unique_ptr<bool[]> alive;
+	std::unique_ptr <glm::vec4[]> forces;
+	std::unique_ptr <float[]> masses;
 
 	size_t count = 0;
 	size_t count_alive = 0;
@@ -69,7 +71,7 @@ class particle_system
 {
 protected:
 	particle_data particles;
-	particle_data alive_particles;
+	//particle_data alive_particles;
 
 	size_t count;
 

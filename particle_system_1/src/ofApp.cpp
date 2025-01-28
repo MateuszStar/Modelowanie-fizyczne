@@ -6,6 +6,10 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 
+	//
+	//  generators
+	//
+
 	box_generator pos{};
 	pos.negavite_corner = glm::vec4(-100, -100, -100, 0);
 	pos.positive_corner = glm::vec4(100, 100, 100, 0);
@@ -15,14 +19,67 @@ void ofApp::setup(){
 	emitter.emit_rate = 1;
 	system.add_emitter(std::make_shared<particle_emitter>(emitter));
 
+	//
+	//  forces
+	//
+
 	gravity g_update;
 	system.add_updater(std::make_shared<gravity>(g_update));
+
+	//wind wiatr;
+	//std::shared_ptr<wind> wiatr_ptr = std::make_shared<wind>(wiatr);
+	system.add_updater(wiatr_ptr);
+
+	//
+	//  movement
+	//
+
+	acceleration acc_updater;
+	system.add_updater(std::make_shared<acceleration>(acc_updater));
+
+	velocity vel_updater;
+	system.add_updater(std::make_shared<velocity>(vel_updater));
 
 	position pos_update;
 	system.add_updater(std::make_shared<position>(pos_update));
 
-	bottom_floor podloga;
-	system.add_updater(std::make_shared<bottom_floor>(podloga));
+	//
+	//  collisions
+	//
+
+	axis_wall podloga;
+	podloga.axis = &glm::vec4::y;
+	podloga.position = -300;
+	podloga.positive_direction = false;
+	system.add_updater(std::make_unique<axis_wall>(podloga));
+
+	axis_wall wallxp;
+	wallxp.axis = &glm::vec4::x;
+	wallxp.position = 300;
+	wallxp.positive_direction = true;
+	system.add_updater(std::make_shared<axis_wall>(wallxp));
+
+	axis_wall wallxm;
+	wallxm.axis = &glm::vec4::x;
+	wallxm.position = -300;
+	wallxm.positive_direction = false;
+	system.add_updater(std::make_shared<axis_wall>(wallxm));
+
+	axis_wall wallzp;
+	wallzp.axis = &glm::vec4::z;
+	wallzp.position = 300;
+	wallzp.positive_direction = true;
+	system.add_updater(std::make_shared<axis_wall>(wallzp));
+
+	axis_wall wallzm;
+	wallzm.axis = &glm::vec4::z;
+	wallzm.position = -300;
+	wallzm.positive_direction = false;
+	system.add_updater(std::make_shared<axis_wall>(wallzm));
+
+
+	force_clearer clearer;
+	system.add_updater(std::make_shared<force_clearer>(clearer));
 	
 }
 
@@ -47,18 +104,23 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	if (key == 'x')
+	if (key == 'w')
 	{
-		pos.x++;
+		wiatr_ptr->force += glm::vec4{1, 0, 0, 0};
 	}
-	if (key == 'y')
+	if (key == 's')
 	{
-		pos.y++;
+		wiatr_ptr->force += glm::vec4{ -1, 0, 0, 0 };
 	}
-	if (key == 'z')
+	if (key == 'a')
 	{
-		pos.z++;
+		wiatr_ptr->force += glm::vec4{ 0, 0, 1, 0 };
 	}
+	if (key == 'd')
+	{
+		wiatr_ptr->force += glm::vec4{ 0, 0, -1, 0 };
+	}
+	std::cout << wiatr.force << "\n";
 }
 
 //--------------------------------------------------------------
